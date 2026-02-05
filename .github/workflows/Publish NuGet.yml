@@ -53,8 +53,8 @@ jobs:
 
       - name: Pack
         working-directory: ./src
-        run: dotnet pack --configuration $BUILD_CONFIG
+        run: dotnet pack $PROJECT --configuration $BUILD_CONFIG
 
       - name: Publish
         working-directory: ./src
-        run: dotnet nuget push **\CreativeMinds.Integrations.HeySender.1.0.2.nupkg --source 'https://nuget.pkg.github.com/CreativeMindsDK/index.json' --api-key ${{secrets.NUGET_API_KEY}}
+        run: dotnet nuget push **\*.nupkg --source 'https://nuget.pkg.github.com/CreativeMindsDK/index.json' --api-key ${{secrets.NUGET_API_KEY}}
