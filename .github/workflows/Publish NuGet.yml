@@ -53,7 +53,7 @@ jobs:
 
       - name: Pack
         working-directory: ./src
-        run: dotnet pack $PROJECT --configuration $BUILD_CONFIG
+        run: dotnet pack --configuration $BUILD_CONFIG
 
       - name: Publish
         working-directory: ./src
