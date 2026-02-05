@@ -1,0 +1,8 @@
+/.vs
+/src/.vs
+/src/*/bin
+/src/*/obj
+/src/*/Properties
+/src/*/appsettings.sft.json
+/src/*/*.user
+/src/*.user
