@@ -18,8 +18,8 @@ jobs:
 
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'src/Transparency.Shared.CompanySearch.sln'
-      PROJECT: 'src/Transparency.Shared.CompanySearch/Transparency.Shared.CompanySearch.csproj'
+      SOLUTION: 'src/CreativeMinds.Integrations.HeySender.sln'
+      PROJECT: 'src/CreativeMinds.Integrations.HeySender/CreativeMinds.Integrations.HeySender.csproj'
       
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 8.x
+          dotnet-version: 9.x
 
       - name: Set version
         run: |
@@ -55,9 +55,9 @@ jobs:
 #        run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
 
       - name: Pack
-        working-directory: ./src/Transparency.Shared.CompanySearch
+        working-directory: ./src/CreativeMinds.Integrations.HeySender
         run: dotnet pack --configuration $BUILD_CONFIG
 
       - name: Publish
-        working-directory: ./src/Transparency.Shared.CompanySearch
+        working-directory: ./src/CreativeMinds.Integrations.HeySender
         run: nuget push **\*.nupkg -Source 'https://nuget.pkg.github.com/CreativeMindsDK/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}

@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36518.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreativeMinds.Integrations.HeySender", "CreativeMinds.Integrations.HeySender\CreativeMinds.Integrations.HeySender.csproj", "{5E34A12F-4A6D-4ADF-9DDD-7B0971799695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{7A04C7AA-099E-4ACB-83D0-DCF421BABADF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\Publish NuGet.yml = ..\.github\workflows\Publish NuGet.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E34A12F-4A6D-4ADF-9DDD-7B0971799695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E34A12F-4A6D-4ADF-9DDD-7B0971799695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E34A12F-4A6D-4ADF-9DDD-7B0971799695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E34A12F-4A6D-4ADF-9DDD-7B0971799695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A04C7AA-099E-4ACB-83D0-DCF421BABADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A04C7AA-099E-4ACB-83D0-DCF421BABADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A04C7AA-099E-4ACB-83D0-DCF421BABADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A04C7AA-099E-4ACB-83D0-DCF421BABADF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E147EC6E-B876-45F6-95E4-8DDE47AA3568}
+	EndGlobalSection
+EndGlobal
