@@ -1,6 +1,7 @@
 ﻿using CreativeMinds.Integrations.HeySender.Configuration;
 using CreativeMinds.Integrations.HeySender.Dtos;
 using CreativeMinds.Integrations.HeySender.Dtos.Responses;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,10 +16,13 @@ namespace CreativeMinds.Integrations.HeySender {
 	public class MessageSenderService {
 		private readonly IHttpClientFactory httpClientFactory;
 		private readonly IHeySenderSettings settings;
+		private static String[] acceptMimes = { "application/json", "text/javascript" };
+		private readonly ILogger<MessageSenderService> logger;
 
-		public MessageSenderService(IHttpClientFactory httpClientFactory, IHeySenderSettings settings) {
-			this.httpClientFactory = httpClientFactory;
-			this.settings = settings;
+		public MessageSenderService(IHttpClientFactory httpClientFactory, IHeySenderSettings settings, ILogger<MessageSenderService> logger) {
+			this.httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+			this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
+			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
 		public async Task<Boolean> SendAsync(Message message, CancellationToken cancellationToken) {
@@ -26,41 +30,26 @@ namespace CreativeMinds.Integrations.HeySender {
 			using var client = this.httpClientFactory.CreateClient();
 
 			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", this.settings.ApiToken);
-			client.DefaultRequestHeaders.Add("Accept", new[] { "application/json", "text/javascript" });
+			client.DefaultRequestHeaders.Add("Accept", acceptMimes);
 
-			using var response = await client.PostAsync(
-				$"{this.settings.Host}/rest/email",
-				JsonContent.Create(message),
-				cancellationToken
-			);
+			var messageContent = JsonContent.Create(message, options: new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+			//var messageString = JsonSerializer.Serialize(message, options: new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
 
-			//client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-			//	"Token",
-			//	this.settings.ApiToken
-			//);
-
-			//HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/rest/email");
-			//request.Headers.Add("Authorization", $"Basic {this.settings.ApiToken}");
-			//request.Content = JsonContent.Create(message, new MediaTypeHeaderValue("application/json"), new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-
-			//var response = await client.PostAsync(, request, cancellationToken);
+			using var response = await client.PostAsync($"{this.settings.Host}/rest/email", messageContent, cancellationToken);
 
 			var responseBody = await response.Content.ReadAsStringAsync();
 
 			try {
-				response.EnsureSuccessStatusCode(); // Throws an error on non-succes status code
+				response.EnsureSuccessStatusCode();
 
 				var result = JsonSerializer.Deserialize<StatusResponse>(responseBody);
 
-
-
-
+				// TODO:
 
 				return true;
 			}
 			catch (HttpRequestException e) {
-				// Catches error and throws the Conta-api-error to frontend instead of generic error.
-				//this.logger.LogError(e, $"Something went wrong when executing API-call to Conta: {nameof(this.PostToContaAsync)} with values: URI: {this._httpClient.BaseAddress}{specificUri}");
+				this.logger.LogError(e, $"Failed to send message to recipients! Response was: {responseBody}");
 
 				return false;
 			}

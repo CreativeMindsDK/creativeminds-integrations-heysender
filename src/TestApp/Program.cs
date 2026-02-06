@@ -28,6 +28,7 @@ var sender = host.Services.GetService<MessageSenderService>();
 
 await sender.SendAsync(new CreativeMinds.Integrations.HeySender.Dtos.Message { /*FromAddress = new CreativeMinds.Integrations.HeySender.Dtos.EmailAddress { Name = "The Robot Bunny", Address = "robot-bunny@human-account.com" }*/
 	FromAddress = "robot-bunny@human-account.com",
+	FromName = "Robot bunny",
 	Html = "<b>hej</b>",
 	PlainText = "hey",
 	Subject = "min test",
