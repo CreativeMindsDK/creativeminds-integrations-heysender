@@ -35,7 +35,7 @@ namespace CreativeMinds.Integrations.HeySender {
 			//			});
 
 			services.Configure<HeySenderSettingsReader>(configuration.GetSection("HeySender"));
-			services.AddTransient<IHeySenderSettings, HeySenderSettingsBridge>();
+			services.AddSingleton<IHeySenderSettings, HeySenderSettingsBridge>();
 
 			return services.AddHeySenderSenderCore();
 		}
