@@ -12,7 +12,7 @@ namespace CreativeMinds.Integrations.HeySender {
 		/// <param name="services"></param>
 		/// <returns></returns>
 		public static IServiceCollection AddHeySenderSenderCore(this IServiceCollection services) {
-			return services.AddSingleton<MessageSenderService, MessageSenderService>();
+			return services.AddScoped<MessageSenderService, MessageSenderService>();
 		}
 
 		public static IServiceCollection AddHeySenderSender(this IServiceCollection services, IConfiguration configuration) {
@@ -35,7 +35,7 @@ namespace CreativeMinds.Integrations.HeySender {
 			//			});
 
 			services.Configure<HeySenderSettingsReader>(configuration.GetSection("HeySender"));
-			services.AddSingleton<IHeySenderSettings, HeySenderSettingsBridge>();
+			services.AddScoped<IHeySenderSettings, HeySenderSettingsBridge>();
 
 			return services.AddHeySenderSenderCore();
 		}
