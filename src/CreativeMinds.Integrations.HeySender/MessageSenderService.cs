@@ -44,6 +44,7 @@ namespace CreativeMinds.Integrations.HeySender {
 
 				var result = JsonSerializer.Deserialize<StatusResponse>(responseBody);
 
+				this.logger.LogDebug($"mail send, '{responseBody}'");
 				// TODO:
 
 				return true;
